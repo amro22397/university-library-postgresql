@@ -5,8 +5,9 @@ import config from "@/lib/config";
 import ImageKit from "imagekit";
 import { useRef, useState } from "react";
 import Image from "next/image";
-// import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner"
 import { cn } from "@/lib/utils";
+import { title } from "process";
 
 const {
     env: {
@@ -71,9 +72,27 @@ const FileUpload = ({
 
   const [progress, setProgress] = useState(0);
 
-  const onError = () => {}
 
-  const onSuccess = () => {}
+
+  const onError = (error: any) => {
+
+    console.log(error);
+
+    toast.error("Image Upload failed")
+
+  }
+
+
+
+  const onSuccess = (res: any) => {
+
+    setFile(res);
+
+    onFileChange(res.filePath);
+
+    toast.success("Image Uploaded Successfully")
+
+  }
 
 
   return (
