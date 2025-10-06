@@ -2,22 +2,22 @@
 
 import AuthForm from "@/components/AuthForm";
 import { signUpSchema } from "@/lib/validation";
-// import { signUp } from "@/lib/actions/auth";
+import { signUp } from "@/lib/actions/auth";
 
 const Page = () => (
-//   <AuthForm
-//     type="SIGN_UP"
-//     schema={signUpSchema}
-//     defaultValues={{
-//       email: "",
-//       password: "",
-//       fullName: "",
-//       universityId: 0,
-//       universityCard: "",
-//     }}
-//     // onSubmit={signUp}
-//   />
-<></>
+  <AuthForm
+    type="SIGN_UP"
+    schema={signUpSchema}
+    defaultValues={{
+      email: "",
+      password: "",
+      fullName: "",
+      universityId: 0,
+      universityCard: "",
+    }}
+    // @ts-ignore
+    onSubmit={signUp}
+  />
 
 );
 
