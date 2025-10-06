@@ -26,13 +26,13 @@ import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import FileUpload from "@/components/FileUpload";
 // import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-
+import { toast } from "sonner";
 
 interface Props<T extends FieldValues> {
-    schema: ZodType<T>;
-    defaultValues: T;
-    onSubmit: (data: T) => Promise<{ success: boolean, error?: string }>;
-    type: "SIGN_IN" | "SIGN_UP";
+  schema: ZodType<T>;
+  defaultValues: T;
+  onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
+  type: "SIGN_IN" | "SIGN_UP";
 }
 
 const AuthForm = <T extends FieldValues>({
@@ -42,16 +42,40 @@ const AuthForm = <T extends FieldValues>({
   onSubmit,
 }: Props<T>) => {
 
-    const isSignIn = type === "SIGN_IN"
 
+  const router = useRouter();
+
+  const isSignIn = type === "SIGN_IN";
+
+  // @ts-ignore
+  const form: UseFormReturn<T> = useForm({
     // @ts-ignore
-    const form: UseFormReturn<T> = useForm({
-        // @ts-ignore
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
   // 2. Define a submit handler
+
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = await onSubmit(data);
+
+    if (result.success) {
+      
+      toast.success("Success");
+
+      router.push("/");
+
+    } else {
+
+      toast.error(`Error ${isSignIn ? "signing In" : "signing Up"}`)
+
+    }
+
+    
+
+
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold text-white">
@@ -63,10 +87,9 @@ const AuthForm = <T extends FieldValues>({
           : "Please complete all fields and upload a valid university ID to gain access to the library"}
       </p>
 
-
-    <Form {...form} >
+      <Form {...form}>
         <form
-        //   onSubmit={form.handleSubmit(handleSubmit)}
+          //   onSubmit={form.handleSubmit(handleSubmit)}
           className="w-full space-y-6"
         >
           {Object.keys(defaultValues).map((field) => (
@@ -90,15 +113,15 @@ const AuthForm = <T extends FieldValues>({
                         onFileChange={field.onChange}
                       />
                     ) : (
-                    //   <Input
-                    //     required
-                    //     type={
-                    //       FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
-                    //     }
-                    //     {...field}
-                    //     className="form-input"
-                    //   />
-                    <></>
+                      //   <Input
+                      //     required
+                      //     type={
+                      //       FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
+                      //     }
+                      //     {...field}
+                      //     className="form-input"
+                      //   />
+                      <></>
                     )}
                   </FormControl>
                   <FormMessage />
@@ -113,8 +136,6 @@ const AuthForm = <T extends FieldValues>({
         </form>
       </Form>
 
-
-
       <p className="text-center text-base font-medium">
         {isSignIn ? "New to BookWise? " : "Already have an account? "}
 
@@ -126,7 +147,7 @@ const AuthForm = <T extends FieldValues>({
         </Link>
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default AuthForm
+export default AuthForm;
