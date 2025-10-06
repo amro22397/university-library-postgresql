@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 // import { Toaster } from "@/components/ui/toaster";
@@ -6,7 +7,6 @@ import localFont from "next/font/local";
 import { ReactNode } from "react";
 // import { SessionProvider } from "next-auth/react";
 // import { auth } from "@/auth";
-
 
 const ibmPlexSans = localFont({
   src: [
@@ -17,26 +17,22 @@ const ibmPlexSans = localFont({
   ],
 });
 
-
 const bebasNeue = localFont({
   src: [
-     { path: "/fonts/BebasNeue-Regular.ttf", weight: "400", style: "normal" },
+    { path: "/fonts/BebasNeue-Regular.ttf", weight: "400", style: "normal" },
   ],
   variable: "--bebas-neue",
-})
-
-
+});
 
 export const metadata: Metadata = {
-  title: "Bookwise",
-  description: "BookWise is a book borrowing university library management solution.",
+  title: "BookWise",
+  description:
+    "BookWise is a book borrowing university library management solution.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
+  // const session = await auth();
+
   return (
     <html lang="en">
       {/* <SessionProvider session={session}> */}
@@ -50,4 +46,6 @@ export default function RootLayout({
       {/* </SessionProvider> */}
     </html>
   );
-}
+};
+
+export default RootLayout;
