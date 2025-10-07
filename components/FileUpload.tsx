@@ -99,7 +99,7 @@ const FileUpload = ({
 
         return false;
       }
-      
+
     }
   };
 
@@ -136,6 +136,7 @@ const FileUpload = ({
             // @ts-ignore
             ikUploadRef.current?.click();
           }
+
         }}
       >
         <Image
@@ -146,11 +147,10 @@ const FileUpload = ({
           className="object-contain"
         />
 
-        {/* <p className={cn("text-base", styles.placeholder)}>{placeholder}</p> */}
+        <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
 
         {file && (
-          //   <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
-          <></>
+            <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
         )}
       </button>
 
