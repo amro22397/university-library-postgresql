@@ -85,21 +85,17 @@ const FileUpload = ({
 
   const onValidate = (file: File) => {
     if (type === "image") {
-
       if (file.size > 20 * 1024 * 1024) {
         toast.error("File size too large");
 
         return false;
       }
-
     } else if (type === "video") {
-
       if (file.size > 50 * 1024 * 1024) {
         toast.error("File size too large");
 
         return false;
       }
-
     }
   };
 
@@ -115,7 +111,8 @@ const FileUpload = ({
         onError={onError}
         onSuccess={onSuccess}
         useUniqueFileName={true}
-        // validateFile={onValidate}
+        //@ts-ignore
+        validateFile={onValidate}
         onUploadStart={() => setProgress(0)}
         onUploadProgress={({ loaded, total }) => {
           const percent = Math.round((loaded / total) * 100);
@@ -128,7 +125,7 @@ const FileUpload = ({
       />
 
       <button
-        // className={cn("upload-btn", styles.button)}
+        className={cn("upload-btn", styles.button)}
         onClick={(e) => {
           e.preventDefault();
 
@@ -136,7 +133,6 @@ const FileUpload = ({
             // @ts-ignore
             ikUploadRef.current?.click();
           }
-
         }}
       >
         <Image
@@ -150,13 +146,18 @@ const FileUpload = ({
         <p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
 
         {file && (
-            <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
+          <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
         )}
       </button>
 
       {progress > 0 && progress !== 100 && (
         <div className="w-full rounded-full bg-green-200">
-          <div className="progress" style={{ width: `${progress}%` }}>
+          <div
+            className="progress"
+            style={{
+              width: `${progress}%`,
+            }}
+          >
             {progress}%
           </div>
         </div>
