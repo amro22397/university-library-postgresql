@@ -5,46 +5,36 @@ import config from "@/lib/config";
 import ImageKit from "imagekit";
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { title } from "process";
 
 const {
-    env: {
-        imagekit: { publicKey, privateKey, urlEndpoint }
-    }
+  env: {
+    imagekit: { publicKey, privateKey, urlEndpoint },
+  },
 } = config;
 
 // const imagekit = new ImageKit({ publicKey, privateKey, urlEndpoint })
 
-
-
 const authenticator = async () => {
-    
-    try {
-        
-        const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
+  try {
+    const response = await fetch(`${config.env.apiEndpoint}/api/auth/imagekit`);
 
-        if (!response.ok) {
-            const errorText = await response.text();
+    if (!response.ok) {
+      const errorText = await response.text();
 
-            throw new Error(
-            `Request failed with status ${response.status}: ${errorText}`
-        )
-        }
-
-        
-
-        
-    } catch (error: any) {
-        
-        throw new Error(`Authentication request failed: ${error.message}`);
+      throw new Error(
+        `Request failed with status ${response.status}: ${errorText}`,
+      );
     }
-}
-
+  } catch (error: any) {
+    throw new Error(`Authentication request failed: ${error.message}`);
+  }
+};
 
 interface Props {
-    type: "image" | "video";
+  type: "image" | "video";
   accept: string;
   placeholder: string;
   folder: string;
@@ -52,7 +42,6 @@ interface Props {
   onFileChange: (filePath: string) => void;
   value?: string;
 }
-
 
 const FileUpload = ({
   type,
@@ -63,37 +52,56 @@ const FileUpload = ({
   onFileChange,
   value,
 }: Props) => {
+  const ikUploadRef = useRef(null);
 
-    const ikUploadRef = useRef(null)
-
-    const [file, setFile] = useState<{ filePath: string | null }>({
+  const [file, setFile] = useState<{ filePath: string | null }>({
     filePath: value ?? null,
   });
 
   const [progress, setProgress] = useState(0);
 
-
+  const styles = {
+    button:
+      variant === "dark"
+        ? "bg-dark-300"
+        : "bg-light-600 border-gray-100 border",
+    placeholder: variant === "dark" ? "text-light-100" : "text-slate-500",
+    text: variant === "dark" ? "text-light-100" : "text-dark-400",
+  };
 
   const onError = (error: any) => {
-
     console.log(error);
 
-    toast.error("Image Upload failed")
-
-  }
-
-
+    toast.error(`${type} upload failed`);
+  };
 
   const onSuccess = (res: any) => {
-
     setFile(res);
 
     onFileChange(res.filePath);
 
-    toast.success("Image Uploaded Successfully")
+    toast.success(`${type} uploaded successfully`);
+  };
 
-  }
+  const onValidate = (file: File) => {
+    if (type === "image") {
 
+      if (file.size > 20 * 1024 * 1024) {
+        toast.error("File size too large");
+
+        return false;
+      }
+
+    } else if (type === "video") {
+
+      if (file.size > 50 * 1024 * 1024) {
+        toast.error("File size too large");
+
+        return false;
+      }
+      
+    }
+  };
 
   return (
     <ImageKitProvider
@@ -141,8 +149,8 @@ const FileUpload = ({
         {/* <p className={cn("text-base", styles.placeholder)}>{placeholder}</p> */}
 
         {file && (
-        //   <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
-        <></>
+          //   <p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
+          <></>
         )}
       </button>
 
@@ -157,24 +165,23 @@ const FileUpload = ({
       {file &&
         (type === "image" ? (
           <IKImage
-          // @ts-ignore
+            // @ts-ignore
             alt={file.filePath}
             // @ts-ignore
             path={file.filePath}
             width={500}
             height={300}
           />
-        
         ) : type === "video" ? (
           <IKVideo
-          // @ts-ignore
+            // @ts-ignore
             path={file.filePath}
             controls={true}
             className="h-96 w-full rounded-xl"
           />
         ) : null)}
     </ImageKitProvider>
-  )
-}
+  );
+};
 
-export default FileUpload
+export default FileUpload;

@@ -51,7 +51,7 @@ const BookForm = ({ type, ...book }: Props) => {
     },
   })
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     
   }
 
