@@ -10,11 +10,13 @@ import { headers } from "next/headers";
 import { success } from "zod";
 import ratelimit from "../ratelimit";
 import { redirect } from "next/navigation";
+import { workflowClient } from "../workflow";
+import config from "../config";
 
 
 
 export const signInWithCredentials = async (params: Pick<AuthCredentials, "email" | "password">) => {
-    
+
     const { email, password } = params;
 
     const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
@@ -23,22 +25,22 @@ export const signInWithCredentials = async (params: Pick<AuthCredentials, "email
     if (!success) return redirect('/too-fast')
 
     try {
-        
+
         const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false
-    });
+            email,
+            password,
+            redirect: false
+        });
 
 
-    if (result?.error) {
-        return { success: false, error: result.error }
-    }
+        if (result?.error) {
+            return { success: false, error: result.error }
+        }
 
-    return { success: true };
+        return { success: true };
 
     } catch (error) {
-        
+
         console.log(error, "");
 
         return { success: false, error: 'SignIn Error' }
@@ -48,7 +50,7 @@ export const signInWithCredentials = async (params: Pick<AuthCredentials, "email
 
 
 export const signUp = async (params: AuthCredentials) => {
-    
+
     const { fullName, email, universityId, password, universityCard } = params;
 
     const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
@@ -58,10 +60,10 @@ export const signUp = async (params: AuthCredentials) => {
 
 
     const existingUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
 
 
     if (existingUser.length > 0) {
@@ -77,21 +79,29 @@ export const signUp = async (params: AuthCredentials) => {
     const hashedPassword = await hash(password, 10);
 
     try {
-        
+
         await db.insert(users).values({
-        fullName,
-      email,
-      universityId,
-      password: hashedPassword,
-      universityCard,
-    });
+            fullName,
+            email,
+            universityId,
+            password: hashedPassword,
+            universityCard,
+        });
 
-    await signInWithCredentials(params);
+        await workflowClient.trigger({
+            url: `${config.env.prodApiEndpoint}/api/workflows/onboarding`,
+            body: {
+                email,
+                fullName,
+            },
+        });
 
-    return { success: true };
+        await signInWithCredentials(params);
+
+        return { success: true };
 
     } catch (error) {
-        
+
         console.log(error, "Sign Up Error");
 
     }
