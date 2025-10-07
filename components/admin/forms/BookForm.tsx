@@ -18,7 +18,9 @@ import { bookSchema } from "@/lib/validation";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/FileUpload";
-// import ColorPicker from "@/components/admin/ColorPicker";
+import ColorPicker from "@/components/admin/ColorPicker";
+import { createBook } from "@/lib/admin/actions/book";
+import { toast } from "sonner";
 // import { createBook } from "@/lib/admin/actions/book";
 // import { toast } from "@/hooks/use-toast";
 
@@ -53,6 +55,22 @@ const BookForm = ({ type, ...book }: Props) => {
 
   const onSubmit = async (values: z.infer<typeof bookSchema>) => {
     
+    const result = await createBook(values);
+
+    if (result.success) {
+
+        toast.success("Book created successfully");
+
+        router.push(`/admin/books/${result.data.id}`);
+
+    } else {
+
+        toast.error(result.message);
+        
+    }
+
+    
+
   }
 
     
