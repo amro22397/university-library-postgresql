@@ -1,11 +1,3 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-
-/* @tailwind base;
-@tailwind components; */
-@tailwind utilities;
-
-
 @layer utilities {
   .bg-primary {
     background-color: #4f46e5;
@@ -19,14 +11,6 @@
   .text-secondary {
     color: #64748b;
   }
-}
-
-
-@theme {
-  --color-primary: #4f46e5;     /* indigo */
-  --color-secondary: #64748b;   /* gray-blue */
-  --color-accent: #22c55e;      /* green */
-  --color-primary-admin: #25388C;
 }
 
 
@@ -60,33 +44,33 @@
 
 @layer components {
   .form-btn {
-    @apply bg-primary text-gray-100 hover:bg-primary inline-flex min-h-14 w-full items-center justify-center rounded-md px-6 py-2 font-bold text-base /* !important */;
+    @apply bg-primary text-dark-100 hover:bg-primary inline-flex min-h-14 w-full items-center justify-center rounded-md px-6 py-2 font-bold text-base /* !important */;
   }
 
   .form-input {
-    @apply w-full min-h-14 border-none text-base font-bold placeholder:font-normal text-white placeholder:text-neutral-100 focus-visible:ring-0 focus-visible:shadow-none bg-gray-300 /* !important */;
+    @apply w-full min-h-14 border-none text-base font-bold placeholder:font-normal text-white placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none bg-dark-300 /* !important */;
   }
 
   /* Book Card */
   .book-title {
-    @apply mt-2 line-clamp-1 text-base font-semibold text-white sm:text-xl;
+    @apply mt-2 line-clamp-1 text-base font-semibold text-white xs:text-xl;
   }
 
   .book-genre {
-    @apply mt-1 line-clamp-1 text-sm italic text-neutral-100 sm:text-base;
+    @apply mt-1 line-clamp-1 text-sm italic text-light-100 xs:text-base;
   }
 
   .book-loaned {
-    @apply flex flex-row items-center gap-1;
+    @apply flex flex-row items-center gap-1 max-xs:justify-center;
   }
 
   .book-btn {
-    @apply bg-gray-600 mt-3 min-h-14 w-full font-mono text-base text-primary;
+    @apply bg-dark-600 mt-3 min-h-14 w-full font-bebas-neue text-base text-primary;
   }
 
   /* Borrowed Book */
   .borrowed-book {
-    @apply p-5 rounded-2xl sm:w-min w-full relative;
+    @apply gradient-vertical p-5 rounded-2xl xs:w-min w-full relative;
   }
 
   .borrowed-book_cover {
@@ -107,16 +91,16 @@
   }
 
   .book-cover_regular {
-    @apply sm:w-[174px] w-[114px] sm:h-[239px] h-[169px];
+    @apply xs:w-[174px] w-[114px] xs:h-[239px] h-[169px];
   }
 
   .book-cover_wide {
-    @apply sm:w-[296px] w-[256px] sm:h-[404px] h-[354px];
+    @apply xs:w-[296px] w-[256px] xs:h-[404px] h-[354px];
   }
 
   /* Book List */
   .book-list {
-    @apply mt-10 flex flex-wrap gap-5 sm:gap-10;
+    @apply mt-10 flex flex-wrap gap-5 max-xs:justify-between xs:gap-10;
   }
 
   /* Book Overview */
@@ -129,7 +113,7 @@
   }
 
   .book-info {
-    @apply mt-7 flex flex-row flex-wrap gap-4 text-xl text-neutral-100;
+    @apply mt-7 flex flex-row flex-wrap gap-4 text-xl text-light-100;
   }
 
   .book-copies {
@@ -137,7 +121,7 @@
   }
 
   .book-copies p {
-    @apply text-xl text-neutral-100;
+    @apply text-xl text-light-100;
   }
 
   .book-copies p span {
@@ -145,11 +129,11 @@
   }
 
   .book-description {
-    @apply mt-2 text-justify text-xl text-neutral-100;
+    @apply mt-2 text-justify text-xl text-light-100;
   }
 
   .book-overview_btn {
-    @apply mt-4 min-h-14 w-fit bg-primary text-gray-100 hover:bg-primary/90 max-md:w-full /* !important */;
+    @apply mt-4 min-h-14 w-fit bg-primary text-dark-100 hover:bg-primary/90 max-md:w-full /* !important */;
   }
 
   /* File Upload */
@@ -162,34 +146,34 @@
   }
 
   .progress {
-    @apply rounded-full bg-green-800 p-0.5 text-center font-mono text-[8px] font-bold leading-none text-neutral-100;
+    @apply rounded-full bg-green-800 p-0.5 text-center font-bebas-neue text-[8px] font-bold leading-none text-light-100;
   }
 
   /* Search */
   .search {
-    @apply relative mt-10 flex min-h-14 w-full items-center rounded-xl bg-gray-300 px-4;
+    @apply relative mt-10 flex min-h-14 w-full items-center rounded-xl bg-dark-300 px-4;
   }
 
   .search-input {
-    @apply w-full border-none font-bold placeholder:font-normal text-white placeholder:text-neutral-100 focus-visible:ring-0 focus-visible:shadow-none /* !important */;
+    @apply w-full border-none font-bold placeholder:font-normal text-white placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none /* !important */;
   }
 
   /* Book Receipt */
   .book-receipt_admin-btn {
-    @apply bg-neutral-300 rounded-md text-primary-admin font-semibold hover:bg-neutral-300/80 /* !important */;
+    @apply bg-light-300 rounded-md text-primary-admin font-semibold hover:bg-light-300/80 /* !important */;
   }
 
   /* Book Ticket */
   #book-ticket {
-    @apply relative mt-10 hidden w-[544px] overflow-hidden bg-gray-300 py-8;
+    @apply relative mt-10 hidden w-[544px] overflow-hidden bg-dark-300 py-8;
   }
 
   #book-ticket #book-details div {
-    @apply space-y-1 rounded-md border border-neutral-100/10 p-3;
+    @apply space-y-1 rounded-md border border-light-100/10 p-3;
   }
 
   #book-ticket #book-details div p:first-child {
-    @apply text-xs text-neutral-700;
+    @apply text-xs text-light-700;
   }
 
   #book-ticket #book-details div p:last-child {
@@ -218,11 +202,11 @@
   }
 
   #not-found p {
-    @apply text-neutral-100 w-[360px] mt-1;
+    @apply text-light-100 w-[360px] mt-1;
   }
 
   .not-found-btn {
-    @apply bg-primary font-mono min-w-[360px] mt-6 text-gray-100 text-xl hover:bg-primary/90 min-h-12 /* !important */;
+    @apply bg-primary font-bebas-neue min-w-[360px] mt-6 text-dark-100 text-xl hover:bg-primary/90 min-h-12 /* !important */;
   }
 
   /* Pagination */
@@ -231,11 +215,11 @@
   }
 
   .pagination-btn_light {
-    @apply bg-neutral-300 text-gray-300 hover:bg-neutral-300/70 /* !important */;
+    @apply bg-light-300 text-dark-300 hover:bg-light-300/70 /* !important */;
   }
 
   .pagination-btn_dark {
-    @apply bg-gray-300 hover:bg-gray-100 /* !important */;
+    @apply bg-dark-300 hover:bg-dark-100 /* !important */;
   }
 
   #pagination p {
@@ -244,15 +228,15 @@
 
   /* Sort */
   .select-trigger {
-    @apply w-40 h-10 px-4 bg-gray-300 text-neutral-100 border-gray-100 /* !important */;
+    @apply w-40 h-10 px-4 bg-dark-300 text-light-100 border-dark-100 /* !important */;
   }
 
   .select-content {
-    @apply bg-gray-300 text-neutral-100 border-gray-100 /* !important */;
+    @apply bg-dark-300 text-light-100 border-dark-100 /* !important */;
   }
 
   .select-item {
-    @apply focus:bg-gray-600 focus:text-neutral-100 /* !important */;
+    @apply focus:bg-dark-600 focus:text-light-100 /* !important */;
   }
 }
 
@@ -271,15 +255,15 @@
 
   /* Auth */
   .auth-container {
-    @apply relative flex flex-col-reverse text-neutral-100 sm:flex-row;
+    @apply relative flex flex-col-reverse text-light-100 sm:flex-row;
   }
 
   .auth-form {
-    @apply my-auto flex h-full min-h-screen flex-1 items-center bg-[url('/images/pattern.webp')] bg-cover bg-top bg-gray-100 px-5 py-10;
+    @apply my-auto flex h-full min-h-screen flex-1 items-center bg-pattern bg-cover bg-top bg-dark-100 px-5 py-10;
   }
 
   .auth-box {
-    @apply mx-auto flex max-w-xl flex-col gap-6 rounded-lg p-10;
+    @apply gradient-vertical mx-auto flex max-w-xl flex-col gap-6 rounded-lg p-10;
   }
 
   .auth-illustration {
@@ -288,7 +272,7 @@
 
   /* Root */
   .root-container {
-    @apply flex min-h-screen flex-1 flex-col bg-[url('/images/pattern.webp')] bg-cover bg-top bg-gray-100 px-5 sm:px-10 md:px-16;
+    @apply flex min-h-screen flex-1 flex-col bg-pattern bg-cover bg-top bg-dark-100 px-5 xs:px-10 md:px-16;
   }
 
   /* Book Details */
@@ -306,11 +290,11 @@
   }
 
   .library-subtitle {
-    @apply text-lg font-semibold uppercase text-neutral-100;
+    @apply text-lg font-semibold uppercase text-light-100;
   }
 
   .library-title {
-    @apply mt-2 text-3xl font-semibold text-white sm:text-5xl;
+    @apply mt-2 text-3xl font-semibold text-white xs:text-5xl;
   }
 }
 

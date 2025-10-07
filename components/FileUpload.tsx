@@ -167,7 +167,8 @@ const FileUpload = ({
         
         ) : type === "video" ? (
           <IKVideo
-            // path={file.filePath}
+          // @ts-ignore
+            path={file.filePath}
             controls={true}
             className="h-96 w-full rounded-xl"
           />
