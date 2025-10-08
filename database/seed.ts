@@ -14,9 +14,9 @@ export const db = drizzle({ client: sql });
 
 
 const imagekit = new ImageKit({
-    publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
-  urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+    publicKey: process.env.NEXT_PUPLIC_IMAGEKIT_PUPLIC_KEY!,
+    urlEndpoint: process.env.NEXT_PUPLIC_IMAGEKIT_URL_ENDPOINT!,
+    privateKey: process.env.NEXT_PUPLIC_IMAGEKIT_PRIVATE_KEY!,
 
 })
 
@@ -24,7 +24,7 @@ const imagekit = new ImageKit({
 const uploadToImageKit = async (url: string, fileName: string, folder: string) => {
 
     try {
-        
+
         const response = await imagekit.upload({
             file: url,
             fileName,
@@ -34,7 +34,7 @@ const uploadToImageKit = async (url: string, fileName: string, folder: string) =
         return response.filePath;
 
     } catch (error) {
-        
+
         console.error(`Server Error uploading image to ImageKit: ${error}`);
 
     }
