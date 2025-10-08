@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { hash } from 'bcryptjs'
 import React from 'react'
 
-const study = () => {
+const study = ({ params }: { params: Promise<{ id: string }> }) => {
 
     // bcryptjs
 
