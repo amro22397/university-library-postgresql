@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 // import { toast } from "@/hooks/use-toast";
 import { borrowBook } from "@/lib/actions/book";
+import { toast } from "sonner";
 
 
 interface Props {
@@ -28,7 +29,37 @@ const BorrowBook = ({
   const [borrowing, setBorrowing] = useState(false);
 
    const handleBorrowBook = async () => {
-    
+
+    if (!isEligible) {
+
+        toast.error(message);
+        
+    }
+
+    setBorrowing(true)
+
+
+
+    try {
+
+        const result = await borrowBook({ bookId, userId });
+
+        if (result.success) {
+            toast.success("Book borrowed successfully")
+        }
+
+        router.push('/')
+        
+    } catch (error) {
+        
+        toast.error(`Client Error while borrowing: ${error}`);
+
+
+    } finally {
+
+        setBorrowing(false);
+
+    }
     }
 
     setBorrowing(true);
