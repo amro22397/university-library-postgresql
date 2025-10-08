@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 
-const BookCard = ({
+const  BookCard = ({
   id,
   title,
   genre,
