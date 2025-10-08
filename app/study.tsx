@@ -1,7 +1,9 @@
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils'
 import { hash } from 'bcryptjs'
+import { IKVideo, ImageKitProvider } from 'imagekitio-next';
 import React from 'react'
+import { config } from 'zod';
 
 const study = ({ params }: { params: Promise<{ id: string }> }) => {
 
@@ -18,6 +20,18 @@ const study = ({ params }: { params: Promise<{ id: string }> }) => {
             rows={10}
             />
         </p>
+
+        
+        <ImageKitProvider 
+        // @ts-ignore
+        urlEndpoint={config.env.imagekit.urlEndpoint}
+        />
+
+        <IKVideo 
+        // path={videoUrl}
+        controls={true}
+
+        />
     </div>
   )
 }

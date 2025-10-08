@@ -8,6 +8,13 @@
       "when": 1759842354306,
       "tag": "0000_majestic_ghost_rider",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1759897826089,
+      "tag": "0001_panoramic_kid_colt",
+      "breakpoints": true
     }
   ]
 }
